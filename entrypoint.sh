@@ -6,6 +6,9 @@ _preflight() {
   COUNTER=0
   echo 'Waiting for Codecov Default to start ...'
 
+  echo "nc -vz $CODECOV_DEFAULT_HOST $CODECOV_DEFAULT_PORT"
+  nc -vz $CODECOV_DEFAULT_HOST $CODECOV_DEFAULT_PORT
+
   while [ -z "`nc -vz $CODECOV_DEFAULT_HOST $CODECOV_DEFAULT_PORT 2>&1 | grep -e open -e succeeded`" ]; do
     COUNTER=$(($COUNTER+1))
     if [ "$COUNTER" -gt 30 ]; then
@@ -22,6 +25,9 @@ _preflight() {
       return 0
   fi
   COUNTER=0
+
+  echo "nc -vz $CODECOV_API_HOST $CODECOV_API_PORT"
+  nc -vz $CODECOV_API_HOST $CODECOV_API_PORT
 
   echo 'Waiting for Codecov api to start ...'
   while [ -z "`nc -vz $CODECOV_API_HOST $CODECOV_API_PORT 2>&1 | grep -e open -e succeeded`" ]; do

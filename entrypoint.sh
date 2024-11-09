@@ -6,7 +6,7 @@ _preflight() {
   COUNTER=0
   echo 'Waiting for Codecov Default to start ...'
 
-  while [ -z "`nc -vz $CODECOV_DEFAULT_HOST $CODECOV_DEFAULT_PORT 2>&1 | grep open`" ]; do
+  while [ -z "`nc -vz $CODECOV_DEFAULT_HOST $CODECOV_DEFAULT_PORT 2>&1 | grep -e open -e succeeded`" ]; do
     COUNTER=$(($COUNTER+1))
     if [ "$COUNTER" -gt 30 ]; then
       echo "Timeout waiting for Codecov Default to start"
@@ -24,7 +24,7 @@ _preflight() {
   COUNTER=0
 
   echo 'Waiting for Codecov api to start ...'
-  while [ -z "`nc -vz $CODECOV_API_HOST $CODECOV_API_PORT 2>&1 | grep open`" ]; do
+  while [ -z "`nc -vz $CODECOV_API_HOST $CODECOV_API_PORT 2>&1 | grep -e open -e succeeded`" ]; do
 
     COUNTER=$(($COUNTER+1))
     if [ "$COUNTER" -gt 60 ]; then
@@ -40,7 +40,7 @@ _preflight() {
   echo 'Codecov api started.'
   COUNTER=0
   echo 'Waiting for Codecov ia to start ...'
-    while [ -z "`nc -vz $CODECOV_IA_HOST $CODECOV_IA_PORT 2>&1 | grep open`" ]; do
+    while [ -z "`nc -vz $CODECOV_IA_HOST $CODECOV_IA_PORT 2>&1 | grep -e open -e succeeded`" ]; do
 
       COUNTER=$(($COUNTER+1))
       if [ "$COUNTER" -gt 30 ]; then

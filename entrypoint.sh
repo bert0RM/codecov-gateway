@@ -26,39 +26,39 @@ _preflight() {
   fi
   COUNTER=0
 
-  echo "nc -vz $CODECOV_API_HOST $CODECOV_API_PORT"
-  nc -vz $CODECOV_API_HOST $CODECOV_API_PORT
+  # echo "nc -vz $CODECOV_API_HOST $CODECOV_API_PORT"
+  # nc -vz $CODECOV_API_HOST $CODECOV_API_PORT
 
-  echo 'Waiting for Codecov api to start ...'
-  while [ -z "`nc -vz $CODECOV_API_HOST $CODECOV_API_PORT 2>&1 | grep -e open -e succeeded`" ]; do
+  # echo 'Waiting for Codecov api to start ...'
+  # while [ -z "`nc -vz $CODECOV_API_HOST $CODECOV_API_PORT 2>&1 | grep -e open -e succeeded`" ]; do
 
-    COUNTER=$(($COUNTER+1))
-    if [ "$COUNTER" -gt 60 ]; then
-      echo "Timeout waiting for Codecov api to start"
-      echo "If this is the first boot ever, initial migrations may have taken longer than this timer. Please restart this service (gateway)"
-      echo "Check logs on api and ensure proper configuration: https://docs.codecov.io/changelog/release-notes-for-v500#infrastructure for more information"
-      exit 1
-    elif [ "$COUNTER" -eq 30 ]; then
-      echo 'Still waiting for Codecov api to start ...'
-    fi
-    sleep 1
-  done
-  echo 'Codecov api started.'
-  COUNTER=0
-  echo 'Waiting for Codecov ia to start ...'
-    while [ -z "`nc -vz $CODECOV_IA_HOST $CODECOV_IA_PORT 2>&1 | grep -e open -e succeeded`" ]; do
+  #   COUNTER=$(($COUNTER+1))
+  #   if [ "$COUNTER" -gt 60 ]; then
+  #     echo "Timeout waiting for Codecov api to start"
+  #     echo "If this is the first boot ever, initial migrations may have taken longer than this timer. Please restart this service (gateway)"
+  #     echo "Check logs on api and ensure proper configuration: https://docs.codecov.io/changelog/release-notes-for-v500#infrastructure for more information"
+  #     exit 1
+  #   elif [ "$COUNTER" -eq 30 ]; then
+  #     echo 'Still waiting for Codecov api to start ...'
+  #   fi
+  #   sleep 1
+  # done
+  # echo 'Codecov api started.'
+  # COUNTER=0
+  # echo 'Waiting for Codecov ia to start ...'
+  #   while [ -z "`nc -vz $CODECOV_IA_HOST $CODECOV_IA_PORT 2>&1 | grep -e open -e succeeded`" ]; do
 
-      COUNTER=$(($COUNTER+1))
-      if [ "$COUNTER" -gt 30 ]; then
-        echo "Timeout waiting for Codecov IA to start"
-        echo "Check logs on IA and ensure proper configuration: https://docs.codecov.io/changelog/release-notes-for-v500#infrastructure for more information"
-        exit 1
-      elif [ "$COUNTER" -eq 15 ]; then
-        echo 'Still waiting for Codecov IA to start ...'
-      fi
-      sleep 1
-    done
-  echo 'Codecov IA started.'
+  #     COUNTER=$(($COUNTER+1))
+  #     if [ "$COUNTER" -gt 30 ]; then
+  #       echo "Timeout waiting for Codecov IA to start"
+  #       echo "Check logs on IA and ensure proper configuration: https://docs.codecov.io/changelog/release-notes-for-v500#infrastructure for more information"
+  #       exit 1
+  #     elif [ "$COUNTER" -eq 15 ]; then
+  #       echo 'Still waiting for Codecov IA to start ...'
+  #     fi
+  #     sleep 1
+  #   done
+  # echo 'Codecov IA started.'
 
   echo 'Codecov preflight complete.'
 }
